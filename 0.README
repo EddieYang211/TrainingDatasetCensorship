@@ -1,0 +1,227 @@
+Please direct questions to z5yang@ucsd.edu
+
+System requirement:
+- This script (especially the preprocessing steps) has not been optimized for memory. Make sure system has at least 16GB of available RAM prior to runing the following steps.
+- The replication scripts rely on R, Python and Jupyter Notebook.
+
+
+1. Word Embedding Test
+To replicate the word embedding test results, first download the baidubaike/people's daily/Wikipedia word embeddings from https://github.com/Embedding/Chinese-Word-Vectors. Make sure to download embeddings that were trained using Word2vec/SGNS on the "Word" level.
+
+## Make sure to set the working directories before running the following scripts
+
+- Preprocess the raw word embeddings:
+  a. extract the raw embeddings from the downloaded bz2 files
+  b. rename the raw embeddings to original_sgns.renmin/original_sgns.baidubaike/original_sgns.wiki
+  c. run 1.Preprocess_raw.ipynb
+  d. run 2.Preprocess_comm_scale.R
+
+- Run tests:
+  a. run 3.Word_embdding_test_baidubaikevswiki.R and 3.Word_embdding_test_renminvswiki.R
+
+
+2. News Sentiment Classification
+
+## Make sure to set the working directories before running the scripts. Note the script for TextCNN was run on Google Colab.
+
+- Get predictions from Naive Bayes and SVM:
+  a. run 4.News_sentiment_prediction_nbsvm.ipynb
+
+- Get predictions from TextCNN:
+  a. run 4.Preprocess_TextCNN.ipynb
+  b. change directories in TextCNN/ and run run.py. Note that to plicate the results in the paper (which are averaged over 10 runs), change the seed in run.py in each run. Use the "--model" argument to control which model to run. If you want run either the Wikipedia or People's Daily model, you also have to change the "embedding" argument in run.py to the appropriate embedding name.
+  - If you want to run b. in Google Colab, first upload the TextCNN folder to your Google Drive.
+
+- Get results based on predictions:
+  a. run 4.TextCNN.ipynb
+  b. save and download the generated predictions to TextCNN/textcnn2class/output
+  c. run 4.Results_aggragate.ipynb
+  d. run 5.News_sentiment_analysis.R
+
+
+
+
+
+# System Information
+
+R:
+
+R version 3.6.3 (2020-02-29)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS Catalina 10.15.4
+
+Matrix products: default
+BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base  
+
+
+Python:
+
+3.8.2 (v3.8.2:7b3ab5921f, Feb 24 2020, 17:52:18) 
+[Clang 6.0 (clang-600.0.57)]
+
+
+Python module version:
+
+absl-py==0.9.0
+aiofiles==0.5.0
+appdirs==1.4.4
+appnope==0.1.0
+astunparse==1.6.3
+attrs==19.3.0
+backcall==0.1.0
+baidu-aip==2.2.17.0
+beautifulsoup4==4.9.1
+bert-for-tf2==0.14.5
+bert-serving-client==1.10.0
+bert-serving-server==1.10.0
+bleach==3.1.4
+boto==2.49.0
+boto3==1.14.28
+botocore==1.17.28
+bs4==0.0.1
+cachetools==4.1.1
+certifi==2020.4.5.1
+chardet==3.0.4
+chinese-converter==1.0.2
+click==7.1.2
+cssselect==1.1.0
+cycler==0.10.0
+Cython==0.29.21
+decorator==4.4.2
+defusedxml==0.6.0
+docutils==0.15.2
+entrypoints==0.3
+fake-useragent==0.1.11
+fasttext==0.9.1
+filelock==3.0.12
+future==0.18.2
+gast==0.3.3
+gensim==3.8.3
+google-auth==1.20.0
+google-auth-oauthlib==0.4.1
+google-pasta==0.2.0
+GPUtil==1.4.0
+grpcio==1.30.0
+h11==0.8.1
+h2==3.2.0
+h5py==2.10.0
+hanlp==2.0.0a52
+hanzidentifier==1.0.2
+hpack==3.0.0
+httpcore==0.3.0
+httptools==0.1.1
+hyperframe==5.2.0
+idna==2.8
+ipykernel==5.2.1
+ipython==7.13.0
+ipython-genutils==0.2.0
+jedi==0.17.0
+jieba==0.42.1
+Jinja2==2.11.2
+jmespath==0.10.0
+joblib==0.16.0
+JPype1==0.7.0
+jsonschema==3.2.0
+jupyter-client==6.1.3
+jupyter-core==4.6.3
+Keras-Preprocessing==1.1.2
+kiwisolver==1.2.0
+lxml==4.5.2
+Markdown==3.2.2
+MarkupSafe==1.1.1
+matplotlib==3.3.0
+mistune==0.8.4
+multidict==4.7.6
+nbconvert==5.6.1
+nbformat==5.0.6
+nltk==3.5
+notebook==6.0.3
+numpy==1.18.3
+oauthlib==3.1.0
+OpenCC==1.1.1
+opt-einsum==3.3.0
+packaging==20.4
+pandas==1.0.3
+pandocfilters==1.4.2
+params-flow==0.8.2
+parse==1.15.0
+parso==0.7.0
+peewee==3.2.2
+pexpect==4.8.0
+pickleshare==0.7.5
+Pillow==7.1.2
+pkuseg==0.0.25
+prometheus-client==0.7.1
+prompt-toolkit==3.0.5
+protobuf==3.12.4
+ptyprocess==0.6.0
+py-params==0.9.7
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
+pybind11==2.5.0
+pycurl==7.43.0.1
+pyee==7.0.2
+Pygments==2.6.1
+pyhanlp==0.1.66
+pyparsing==2.4.7
+pyppeteer==0.0.25
+pyquery==1.4.1
+pyrsistent==0.16.0
+python-dateutil==2.8.1
+pytz==2019.3
+pyzmq==19.0.0
+regex==2020.7.14
+requests==2.22.0
+requests-async==0.5.0
+requests-html==0.9.0
+requests-oauthlib==1.3.0
+rfc3986==1.4.0
+rsa==4.6
+s3transfer==0.3.3
+sacremoses==0.0.43
+sanic==19.6.3
+Sanic-Cors==0.9.9
+Sanic-Plugins-Framework==0.9.3
+schedule==0.5.0
+scikit-learn==0.23.1
+scipy==1.4.1
+scylla==1.1.7
+Send2Trash==1.5.0
+sentencepiece==0.1.91
+six==1.15.0
+sklearn==0.0
+smart-open==2.1.0
+soupsieve==2.0.1
+tensorboard==2.3.0
+tensorboard-plugin-wit==1.7.0
+tensorflow==2.3.0
+tensorflow-estimator==2.3.0
+termcolor==1.1.0
+terminado==0.8.3
+testpath==0.4.4
+threadpoolctl==2.1.0
+thulac==0.2.1
+tokenizers==0.8.1rc1
+torch==1.5.1
+torchvision==0.6.1
+tornado==5.0.2
+tqdm==4.48.0
+traitlets==4.3.3
+transformers==3.0.2
+ujson==3.0.0
+urllib3==1.25.9
+uvloop==0.14.0
+w3lib==1.22.0
+wcwidth==0.1.9
+webencodings==0.5.1
+websockets==7.0
+Werkzeug==1.0.1
+wrapt==1.12.1
+zhon==1.1.5
